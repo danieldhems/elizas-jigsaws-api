@@ -24,16 +24,30 @@ Resources:
     Metadata:
       BuildMethod: nodejs20.x
 
+  UtilsLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: utils-layer
+      Description: Util functions
+      ContentUri: layers/utils/nodejs/
+      CompatibleRuntimes:
+        - nodejs20.x
+      CompatibleArchitectures:
+        - x86_64
+    Metadata:
+      BuildMethod: nodejs20.x
+
   UploadLibraryImageFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ./src/upload-library-image
+      CodeUri: ./handlers/upload-library-image
       Handler: app.lambdaHandler
       Runtime: nodejs24.x
       Architectures:
         - x86_64
       Layers:
         - !Ref SharpLayer
+        - !Ref UtilsLayer
       Events:
         UploadLibraryImage:
           Type: Api

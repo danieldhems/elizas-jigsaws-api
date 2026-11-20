@@ -150,7 +150,8 @@ temp/
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -199,7 +200,7 @@ $RECYCLE.BIN/
 *.msi
 *.msix
 *.msm
-*.msp
+*.msp`
 
 # Windows shortcuts
 *.lnk

@@ -4,6 +4,7 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { fileTypeFromBuffer } from "file-type";
 import { v4 as uuid } from "uuid";
 import Sharp from "sharp";
+import { jsonCorsResponse } from 'utils';
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
@@ -66,22 +67,17 @@ export const lambdaHandler = async (event) => {
         
         await docClient.send(dynamoPutCommand);
     
-        return {
-            statusCode: 200,
-            headers:  {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "POST",
-            },
-            body: JSON.stringify({
-                message: "Image uploaded successfully",
-                origImageUrl: s3OrigUrl,
-                galleryImageUrl: s3GalleryUrl, 
-            }),
-        }
+        const responseData = {
+            message: "Image uploaded successfully",
+            origImageUrl: s3OrigUrl,
+            galleryImageUrl: s3GalleryUrl, 
+        };
+
+        return jsonCorsResponse(200, responseData);
     } catch(e) {
         console.error(e)
         return {
-            statusCode: 200,
+            statusCode: 501,
             headers:  {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "POST",
