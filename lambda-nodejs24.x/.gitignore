@@ -61,6 +61,15 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Whitelist Sharp layer
+!layers/sharp/nodejs
+layers/sharp/nodejs/node_modules
+
+# Whitelist Utils layer
+!layers/utils/nodejs/node_modules
+layers/utils/nodejs/node_modules/*
+!layers/utils/nodejs/node_modules/utils
+
 # TypeScript v1 declaration files
 typings/
 
